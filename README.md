@@ -52,7 +52,7 @@ Nos hemos centrado en Litmus y Kubernetes pero cabe recordar que dependiendo del
 
 
 ### ¿Eres un DevOPs/SRE o un entusiasta de Kubernetes? ¿Te emociona la Ingeniería del Caos?
-Únete a nuestra comunidad en Slack para discusiones detalladas, retroalimentación y actualizaciones regulares sobre Ingeniería del Caos para Kubernetes: https://kubernetes.slack.com/messages/CNXNB0ZTN
+- Únete a nuestra comunidad en Slack para discusiones detalladas, retroalimentación y actualizaciones regulares sobre Ingeniería del Caos para Kubernetes: https://kubernetes.slack.com/messages/CNXNB0ZTN
 (canal #litmus en el espacio de trabajo de Kubernetes)
-Visita el repositorio de Litmus Chaos en GitHub y comparte tus comentarios: https://github.com/litmuschaos/litmus
-Envía una solicitud de pull si identificas algún cambio necesario.
+- Visita el repositorio de Litmus Chaos en GitHub y comparte tus comentarios: https://github.com/litmuschaos/litmus
+- Envía una solicitud de pull si identificas algún cambio necesario.
