@@ -37,6 +37,11 @@ Fácil integración en pipelines CI/CD: invocar y obtener el resultado de un exp
 - Exportación de métricas: puedes exportar distintas métricas de tus experimentos directamente a Prometheus.
 El producto está liberado bajo licencia Apache-2.0, dispone de una amplia comunidad de desarrolladores y desde 2020 pertenece a Cloud Native Computing Foundation.
 
+## Propuestas CICD
+
+Uso de Jenkins [leer](README-JENKINS.md)
+
+Uso de Gitlab [leer](README-JENKINS.md)
 
 ### Consideraciones finales
 Debemos asumir que nuestro sistema no va a ser 100% tolerante a fallos pero ello no implica que pongamos todos los medios para minimizar los riesgos y en caso de producirse el desastre, lo hagamos de una forma relativamente controlada. La clave del éxito pasa por aplicar las prácticas de ingeniería del caos en fases tempranas del desarrollo, conocer las particularidades de la infraestructura donde ejecuta y disponer de herramientas adecuadas para automatizar las pruebas.
