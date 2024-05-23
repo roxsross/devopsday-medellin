@@ -39,9 +39,9 @@ El producto está liberado bajo licencia Apache-2.0, dispone de una amplia comun
 
 ## Propuestas CICD
 
-Uso de Jenkins [leer](README-JENKINS.md)
+Jenkins [leer](README-JENKINS.md)
 
-Uso de Gitlab [leer](README-JENKINS.md)
+Gitlab [leer](README-JENKINS.md)
 
 ### Consideraciones finales
 Debemos asumir que nuestro sistema no va a ser 100% tolerante a fallos pero ello no implica que pongamos todos los medios para minimizar los riesgos y en caso de producirse el desastre, lo hagamos de una forma relativamente controlada. La clave del éxito pasa por aplicar las prácticas de ingeniería del caos en fases tempranas del desarrollo, conocer las particularidades de la infraestructura donde ejecuta y disponer de herramientas adecuadas para automatizar las pruebas.
