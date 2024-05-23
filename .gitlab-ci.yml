@@ -1,0 +1,56 @@
+stages:
+  - deploy
+  - performance
+
+variables:
+  RUNNER_IMAGE: registry.gitlab.com/roxsross-public/runner-images/runner-images:k8s-tools
+  LITMUS_ENDPOINT: ""
+  LITMUS_USERNAME: ""
+  LITMUS_PASSWORD: ""
+  PROJECT_ID: ""
+  EXPERIMENT_ID: ""
+  LITMUS_INFRA: ""
+  CI_PROJECT_NAME: "devopsday-medellin"
+  LITMUS_CREATE: "false"
+  CLUSTER: ""
+ 
+deploy_k8s:
+  stage: deploy
+  image: $RUNNER_IMAGE
+  script:
+    - aws eks update-kubeconfig --region us-east-1 --name $CLUSTER
+    - kubectl apply -f $CI_PROJECT_NAME/deployment.yaml
+
+remove_k8s:
+  stage: deploy
+  image: $RUNNER_IMAGE
+  script:
+    - aws eks update-kubeconfig --region us-east-1 --name $CLUSTER
+    - kubectl delete -f $CI_PROJECT_NAME/deployment.yaml
+  when: manual
+
+chaos-litmus🔥:
+  stage: performance
+  image: $RUNNER_IMAGE
+  script:
+    - aws eks update-kubeconfig --region us-east-1 --name $CLUSTER
+    - litmusctl version
+    - |
+      litmusctl config set-account --endpoint="$LITMUS_ENDPOINT" --username="$LITMUS_USERNAME" --password="$LITMUS_PASSWORD" --non-interactive=true || true
+      find / -type f -name ".litmusconfig"
+      litmusctl get chaos-environments --project-id="$PROJECT_ID" --environment-id="sandbox"
+      litmusctl get chaos-infra  --project-id="$PROJECT_ID"
+      if [ $LITMUS_CREATE == "true" ]; then
+        echo "Create chaos experiments";
+        litmusctl create chaos-experiment -f "./experiments/devopsday-medellin-delete-pod.yaml" --project-id="$PROJECT_ID" --chaos-infra-id="$LITMUS_INFRA" --description demo
+        litmusctl get chaos-experiment-runs --project-id="$PROJECT_ID" --experiment-id="$EXPERIMENT_ID"
+      else  
+      litmusctl run chaos-experiment --project-id="$PROJECT_ID" --experiment-id="$EXPERIMENT_ID"
+      fi
+      echo "Waiting for the chaos experiment to finish...";
+      until kubectl get workflow  --sort-by=.metadata.creationTimestamp -o jsonpath='{.items[-1:].metadata.labels.\workflows\.argoproj\.io\/phase}' -n litmus | grep -m 1 "Succeeded\|Failed";
+        do
+          sleep 5;
+        done
+        echo "Chaos experiment finished."
+  when: manual
